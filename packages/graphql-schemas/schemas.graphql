@@ -1,0 +1,145 @@
+"""Types of questions supported by the system."""
+enum QuestionType {
+  TEXT
+  MULTIPLE_CHOICE
+  CHECKBOX
+  DATE
+}
+
+"""A single question inside a form."""
+type Question {
+  id: ID!
+  formId: ID!
+  type: QuestionType!
+  label: String!
+  description: String
+  required: Boolean!
+  order: Int!
+
+  options: [String!]
+  placeholder: String
+  minDate: String
+  maxDate: String
+  
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""Pagination wrapper for questions"""
+type QuestionsPage {
+  data: [Question!]!
+  page: Int!
+  pageSize: Int!
+  totalItems: Int!
+  totalPages: Int!
+}
+
+"""A form containing a list of questions."""
+type Form {
+  id: ID!
+  title: String!
+  description: String
+
+  questions: [Question!]
+
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""Pagination wrapper for forms"""
+type FormsPage {
+  data: [Form!]!
+  page: Int!
+  pageSize: Int!
+  totalItems: Int!
+  totalPages: Int!
+}
+
+"""A response to a form, containing answers to each question."""
+type Response {
+  id: ID!
+  formId: ID!
+  form: Form!
+  answers: [Answer!]
+  
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""An answer to a specific question."""
+type Answer {
+  responseId: ID!
+  questionId: ID!
+  response: Response
+  question: Question
+  value: String
+  values: [String!]
+  
+  createdAt: String!
+  updatedAt: String!
+}
+
+
+
+"""Input for creating a question in a form."""
+input QuestionInput {
+  type: QuestionType!
+  label: String!
+  description: String
+  required: Boolean!
+  order: Int!
+
+  options: [String!]
+  placeholder: String
+  minDate: String
+  maxDate: String
+}
+
+"""Input for creating a form"""
+input FormInput {
+  title: String!
+  description: String
+  questions: [QuestionInput!]!
+}
+
+"""Input for answering a question in a response."""
+input AnswerInput {
+  questionId: ID!
+  value: String
+  values: [String!]
+}
+
+"""Input for submiting response to a form."""
+input ResponseInput {
+  formId: ID!
+  answers: [AnswerInput!]!
+}
+
+"""Input to specify pagination"""
+input PaginationInput {
+  page: Int!       # e.g., 1
+  pageSize: Int!   # e.g., 10
+}
+
+type Query {
+  """Returns a single form by its ID."""
+  form(id: ID!): Form
+
+  """Returns a paginated list of forms."""
+  formsPage(pagination: PaginationInput!): FormsPage!
+
+  """Returns all responses for a given form ID."""
+  responses(formId: ID!): [Response!]!
+}
+
+type Mutation {
+  """Creates a new form with optional questions."""
+  createForm(
+    input: FormInput!
+  ): Form!
+
+  """Submits a response to a form with answers."""
+  submitResponse(
+    input: ResponseInput!
+  ): Response!
+}
