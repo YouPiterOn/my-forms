@@ -1,5 +1,5 @@
 import { Args, Mutation, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
-import { Form, FormInput, FormsPage, PaginationInput, Question, QuestionsPage } from "src/gen/graphql.generated";
+import { Form, FormInput, FormsPage, PaginationInput, Question, QuestionsPage, Response } from "src/gen/graphql.generated";
 import { FormService } from "./form.service";
 import { QuestionService } from "src/question/question.service";
 

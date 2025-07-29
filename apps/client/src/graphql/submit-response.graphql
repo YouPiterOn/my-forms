@@ -1,0 +1,17 @@
+mutation SubmitResponse($input: ResponseInput!) {
+  submitResponse(input: $input) {
+    id
+    formId
+    createdAt
+    updatedAt
+    answers {
+      questionId
+      value
+      values
+    }
+    form {
+      id
+      title
+    }
+  }
+}

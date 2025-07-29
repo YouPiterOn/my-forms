@@ -3,7 +3,7 @@ import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 
 export const api = createApi({
   baseQuery: graphqlRequestBaseQuery({
-    url: '/graphql',
+    url: 'http://localhost:3000/graphql',
   }),
   endpoints: () => ({}),
 })

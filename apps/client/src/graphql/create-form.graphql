@@ -1,5 +1,5 @@
-query GetForm($id: ID!) {
-  form(id: $id) {
+mutation CreateForm($input: FormInput!) {
+  createForm(input: $input) {
     id
     title
     description

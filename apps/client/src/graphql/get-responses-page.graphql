@@ -1,0 +1,27 @@
+query GetResponsesPage($pagination: PaginationInput!, $filters: ResponseFilters) {
+  responsesPage(pagination: $pagination, filters: $filters) {
+    data {
+      id
+      formId
+      createdAt
+      updatedAt
+      form {
+        id
+        title
+      }
+      answers {
+        id
+        question {
+          id
+          label
+        }
+        value
+        values
+      }
+    }
+    page
+    pageSize
+    totalItems
+    totalPages
+  }
+}
