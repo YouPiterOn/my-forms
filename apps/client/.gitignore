@@ -10,11 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-build
-gen
-*.generated.*
 *.local
-.turbo
 
 # Editor directories and files
 .vscode/*
@@ -26,4 +22,3 @@ gen
 *.njsproj
 *.sln
 *.sw?
-.vercel

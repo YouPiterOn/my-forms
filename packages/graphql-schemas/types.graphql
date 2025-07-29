@@ -1,0 +1,75 @@
+#import "./enums.graphql"
+
+"""A single question inside a form."""
+type Question {
+  id: ID!
+  formId: ID!
+  type: QuestionType!
+  label: String!
+  description: String
+  required: Boolean!
+  order: Int!
+
+  options: [String!]
+  placeholder: String
+  minDate: String
+  maxDate: String
+  
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""Pagination wrapper for questions"""
+type QuestionsPage {
+  data: [Question!]!
+  page: Int!
+  pageSize: Int!
+  totalItems: Int!
+  totalPages: Int!
+}
+
+"""A form containing a list of questions."""
+type Form {
+  id: ID!
+  title: String!
+  description: String
+
+  questions: [Question!]
+
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""Pagination wrapper for forms"""
+type FormsPage {
+  data: [Form!]!
+  page: Int!
+  pageSize: Int!
+  totalItems: Int!
+  totalPages: Int!
+}
+
+"""A response to a form, containing answers to each question."""
+type Response {
+  id: ID!
+  formId: ID!
+  form: Form!
+  answers: [Answer!]
+  
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""An answer to a specific question."""
+type Answer {
+  responseId: ID!
+  questionId: ID!
+  response: Response
+  question: Question
+  value: String
+  values: [String!]
+  
+  createdAt: String!
+  updatedAt: String!
+}
+

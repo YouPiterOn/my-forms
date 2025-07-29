@@ -1,0 +1,8 @@
+
+"""Types of questions supported by the system."""
+enum QuestionType {
+  TEXT
+  MULTIPLE_CHOICE
+  CHECKBOX
+  DATE
+}

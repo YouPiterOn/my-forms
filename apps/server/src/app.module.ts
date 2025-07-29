@@ -3,16 +3,15 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { FormModule } from './form/form.module';
+import depthLimit from 'graphql-depth-limit';
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      typePaths: ['../../packages/graphql-schemas/*.graphql'],
-      definitions: {
-        path: join(process.cwd(), 'src/gen/graphql.ts'),
-        outputAs: 'class',
-      },
+      graphiql: true,
+      validationRules: [depthLimit(5)],
+      typePaths: ['../../packages/graphql-schemas/*.graphql']
     }),
     FormModule
   ],

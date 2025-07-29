@@ -1,0 +1,42 @@
+#import "./enums.graphql"
+
+"""Input for creating a question in a form."""
+input QuestionInput {
+  formId: ID!
+  type: QuestionType!
+  label: String!
+  description: String
+  required: Boolean!
+  order: Int!
+
+  options: [String!]
+  placeholder: String
+  minDate: String
+  maxDate: String
+}
+
+"""Input for creating a form"""
+input FormInput {
+  title: String!
+  description: String
+  questions: [QuestionInput!]!
+}
+
+"""Input for answering a question in a response."""
+input AnswerInput {
+  questionId: ID!
+  value: String
+  values: [String!]
+}
+
+"""Input for submiting response to a form."""
+input ResponseInput {
+  formId: ID!
+  answers: [AnswerInput!]!
+}
+
+"""Input to specify pagination"""
+input PaginationInput {
+  page: Int!       # e.g., 1
+  pageSize: Int!   # e.g., 10
+}

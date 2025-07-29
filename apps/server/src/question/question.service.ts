@@ -10,7 +10,7 @@ import { dateNow, generateId } from 'src/common/utils/repository.utils';
 export class QuestionService {
   constructor(
     private readonly questionRepository: QuestionRepository
-  ) {}
+  ) { }
 
   create(dto: QuestionDto): QuestionEntity {
     const id = generateId();
@@ -23,6 +23,22 @@ export class QuestionService {
       updatedAt: date,
     };
     return this.questionRepository.create(question);
+  }
+
+  createMany(dtos: QuestionDto[]) {
+    const date = dateNow();
+
+    for (const dto of dtos) {
+      const id = generateId();
+      
+      const question: QuestionEntity = {
+        ...dto,
+        id: id,
+        createdAt: date,
+        updatedAt: date,
+      };
+      this.questionRepository.create(question)
+    }
   }
 
   getById(id: string): QuestionEntity | undefined {

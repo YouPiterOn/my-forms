@@ -1,0 +1,13 @@
+#import "./types.graphql"
+#import "./inputs.graphql"
+
+type Query {
+  """Returns a single form by its ID."""
+  form(id: ID!): Form
+
+  """Returns a paginated list of forms."""
+  formsPage(pagination: PaginationInput!): FormsPage!
+
+  """Returns all responses for a given form ID."""
+  responses(formId: ID!): [Response!]!
+}

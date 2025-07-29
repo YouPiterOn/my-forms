@@ -1,0 +1,16 @@
+query GetForm($id: ID!) {
+  form(id: $id) {
+    id
+    title
+    description
+    createdAt
+    updatedAt
+    questions {
+      id
+      label
+      type
+      required
+      order
+    }
+  }
+}

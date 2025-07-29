@@ -1,5 +1,5 @@
-import { Args, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
-import { Form, FormsPage, PaginationInput, QuestionsPage } from "src/gen/graphql";
+import { Args, Mutation, Parent, Query, ResolveField, Resolver } from "@nestjs/graphql";
+import { Form, FormInput, FormsPage, PaginationInput, QuestionsPage } from "src/gen/graphql.generated";
 import { FormService } from "./form.service";
 import { QuestionService } from "src/question/question.service";
 
@@ -29,4 +29,12 @@ export class FormResolver {
     return this.questionService.getPage(pagination.page, pagination.pageSize, { formId: form.id })
   }
 
+  @Mutation(() => Form)
+  async createForm(
+    @Args('input') input: FormInput
+  ) {
+    const form = this.formService.create(input);
+    this.questionService.createMany(input.questions)
+    return form;
+  }
 }

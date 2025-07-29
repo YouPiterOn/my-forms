@@ -1,0 +1,13 @@
+query GetFormsPage($pagination: PaginationInput!) {
+  formsPage(pagination: $pagination) {
+    data {
+      id
+      title
+      description
+    }
+    page
+    pageSize
+    totalItems
+    totalPages
+  }
+}

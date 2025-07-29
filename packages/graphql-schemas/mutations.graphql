@@ -1,0 +1,14 @@
+#import "./types.graphql"
+#import "./inputs.graphql"
+
+type Mutation {
+  """Creates a new form with optional questions."""
+  createForm(
+    input: FormInput!
+  ): Form!
+
+  """Submits a response to a form with answers."""
+  submitResponse(
+    input: ResponseInput!
+  ): Response!
+}
