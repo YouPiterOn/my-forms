@@ -1,15 +1,33 @@
 import { Page } from "./types/page.types";
+import { dateNow, generateId } from "./utils/repository.utils";
 
 type ID = string;
 
-export class InMemoryRepository<T extends { id: ID }, F extends Partial<Record<keyof T, unknown>> = Partial<T>> {
-  private items = new Map<ID, T>();
+export interface BaseEntity {
+  id: ID;
+  createdAt: string;
+  updatedAt: string;
+}
 
-  create(item: T): T {
-    if (this.items.has(item.id)) {
-      throw new Error(`Item with id ${item.id} already exists`);
-    }
-    this.items.set(item.id, item);
+export class InMemoryRepository<
+  T extends BaseEntity,
+  F extends Partial<Record<keyof T, unknown>> = Partial<T>,
+  C = Omit<T, 'id' | 'createdAt' | 'updatedAt'>,
+> {
+  protected items = new Map<ID, T>();
+
+  create(data: C): T {
+    const id = generateId();
+    const now = dateNow();
+
+    const item = {
+      id,
+      createdAt: now,
+      updatedAt: now,
+      ...data,
+    } as unknown as T;
+
+    this.items.set(id, item);
     return item;
   }
 
@@ -21,11 +39,9 @@ export class InMemoryRepository<T extends { id: ID }, F extends Partial<Record<k
     const idsSet = new Set(ids);
     const entitiesMap = new Map<ID, T>();
 
-    for (const author of this.items.values()) {
-      if (entitiesMap.has(author.id)) continue;
-
-      if (idsSet.has(author.id)) {
-        entitiesMap.set(author.id, author);
+    for (const item of this.items.values()) {
+      if (idsSet.has(item.id)) {
+        entitiesMap.set(item.id, item);
       }
     }
 
@@ -56,13 +72,18 @@ export class InMemoryRepository<T extends { id: ID }, F extends Partial<Record<k
     };
   }
 
-
-  update(id: ID, updateData: Partial<Omit<T, "id">>): T {
-    const item = this.items.get(id);
-    if (!item) {
+  update(id: ID, updateData: Partial<C>): T {
+    const existing = this.items.get(id);
+    if (!existing) {
       throw new Error(`Item with id ${id} not found`);
     }
-    const updated = { ...item, ...updateData };
+
+    const updated: T = {
+      ...existing,
+      ...updateData,
+      updatedAt: dateNow(),
+    };
+
     this.items.set(id, updated);
     return updated;
   }
@@ -71,7 +92,7 @@ export class InMemoryRepository<T extends { id: ID }, F extends Partial<Record<k
     return this.items.delete(id);
   }
 
-  clear() {
+  clear(): void {
     this.items.clear();
   }
 }

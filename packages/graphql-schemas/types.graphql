@@ -53,15 +53,25 @@ type FormsPage {
 type Response {
   id: ID!
   formId: ID!
-  form: Form!
+  form: Form
   answers: [Answer!]
   
   createdAt: String!
   updatedAt: String!
 }
 
+"""Pagination wrapper for responses"""
+type ResponsesPage {
+  data: [Response!]!
+  page: Int!
+  pageSize: Int!
+  totalItems: Int!
+  totalPages: Int!
+}
+
 """An answer to a specific question."""
 type Answer {
+  id: ID!
   responseId: ID!
   questionId: ID!
   response: Response
@@ -73,3 +83,11 @@ type Answer {
   updatedAt: String!
 }
 
+"""Pagination wrapper for answers"""
+type AnswersPage {
+  data: [Answer!]!
+  page: Int!
+  pageSize: Int!
+  totalItems: Int!
+  totalPages: Int!
+}

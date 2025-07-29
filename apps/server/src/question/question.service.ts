@@ -13,32 +13,7 @@ export class QuestionService {
   ) { }
 
   create(dto: QuestionDto): QuestionEntity {
-    const id = generateId();
-    const date = dateNow();
-
-    const question: QuestionEntity = {
-      ...dto,
-      id: id,
-      createdAt: date,
-      updatedAt: date,
-    };
-    return this.questionRepository.create(question);
-  }
-
-  createMany(dtos: QuestionDto[]) {
-    const date = dateNow();
-
-    for (const dto of dtos) {
-      const id = generateId();
-      
-      const question: QuestionEntity = {
-        ...dto,
-        id: id,
-        createdAt: date,
-        updatedAt: date,
-      };
-      this.questionRepository.create(question)
-    }
+    return this.questionRepository.create(dto);
   }
 
   getById(id: string): QuestionEntity | undefined {
@@ -53,12 +28,12 @@ export class QuestionService {
     return this.questionRepository.getPage(page, pageSize, filters);
   }
 
+  getAllByFormId(formId: string): QuestionEntity[] {
+    return this.questionRepository.getAllByFormId(formId);
+  }
+
   update(id: string, dto: QuestionDto): QuestionEntity {
-    const updated = {
-      ...dto,
-      updatedAt: dateNow(),
-    };
-    return this.questionRepository.update(id, updated);
+    return this.questionRepository.update(id, dto);
   }
 
   delete(id: string): boolean {

@@ -9,5 +9,5 @@ type Query {
   formsPage(pagination: PaginationInput!): FormsPage!
 
   """Returns all responses for a given form ID."""
-  responses(formId: ID!): [Response!]!
+  responsesPage(pagination: PaginationInput!, filters: ResponseFilters): ResponsesPage!
 }

@@ -10,6 +10,10 @@ import { FormRepository } from "./form.repository";
     FormRepository,
     FormService,
     FormResolver
+  ],
+  exports: [
+    FormRepository,
+    FormService
   ]
 })
 export class FormModule {}

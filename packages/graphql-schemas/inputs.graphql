@@ -2,7 +2,6 @@
 
 """Input for creating a question in a form."""
 input QuestionInput {
-  formId: ID!
   type: QuestionType!
   label: String!
   description: String
@@ -37,6 +36,11 @@ input ResponseInput {
 
 """Input to specify pagination"""
 input PaginationInput {
-  page: Int!       # e.g., 1
-  pageSize: Int!   # e.g., 10
+  page: Int!
+  pageSize: Int!
+}
+
+"""Filters for response pagination"""
+input ResponseFilters {
+  formId: ID
 }

@@ -1,6 +1,7 @@
+import { BaseEntity } from "src/common/in-memory.repository";
 import { QuestionType } from "../enum/question-type.enum";
 
-export interface QuestionEntity {
+export interface QuestionEntity extends BaseEntity {
   id: string;
   formId: string;
   type: QuestionType;

@@ -1,10 +1,8 @@
 import { BaseEntity } from "src/common/in-memory.repository";
 
-export interface FormEntity extends BaseEntity {
+export interface ResponseEntity extends BaseEntity {
   id: string;
-  title: string;
-  description?: string | null;
-
+  formId: string;
   createdAt: string;
   updatedAt: string;
 }

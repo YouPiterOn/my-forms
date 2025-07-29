@@ -4,6 +4,9 @@ import { QuestionService } from "./question.service";
 
 @Module({
   providers: [QuestionRepository, QuestionService],
-  exports: [QuestionService]
+  exports: [
+    QuestionService,
+    QuestionRepository
+  ]
 })
 export class QuestionModule {}

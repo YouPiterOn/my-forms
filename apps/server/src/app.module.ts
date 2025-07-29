@@ -4,6 +4,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { FormModule } from './form/form.module';
 import depthLimit from 'graphql-depth-limit';
+import { ResponseModule } from './response/response.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import depthLimit from 'graphql-depth-limit';
       validationRules: [depthLimit(5)],
       typePaths: ['../../packages/graphql-schemas/*.graphql']
     }),
-    FormModule
+    FormModule,
+    ResponseModule
   ],
   providers: []
 })

@@ -4,24 +4,23 @@ import { FormDto } from "./dto/form.dto";
 import { FormEntity } from "./entity/form.entity";
 import { dateNow, generateId } from "src/common/utils/repository.utils";
 import { Page } from "src/common/types/page.types";
+import { CreateFormDto } from "./dto/create-form.dto";
+import { QuestionRepository } from "src/question/question.repository";
 
 @Injectable()
 export class FormService {
   constructor(
-    private readonly formRepository: FormRepository
+    private readonly formRepository: FormRepository,
+    private readonly questionRepository: QuestionRepository
   ) {}
 
-  create(dto: FormDto): FormEntity {
-    const id = generateId();
-    const date = dateNow();
+  create(dto: CreateFormDto): FormEntity {
+    const form = this.formRepository.create(dto);
+    for(const question of dto.questions) {
+      this.questionRepository.create({ formId: form.id, ...question })
+    }
 
-    const question: FormEntity = {
-      ...dto,
-      id: id,
-      createdAt: date,
-      updatedAt: date,
-    };
-    return this.formRepository.create(question);
+    return form;
   }
 
   getById(id: string): FormEntity | undefined {
@@ -36,11 +35,7 @@ export class FormService {
   }
 
   update(id: string, dto: FormDto): FormEntity {
-    const updated = {
-      ...dto,
-      updatedAt: dateNow(),
-    };
-    return this.formRepository.update(id, updated);
+    return this.formRepository.update(id, dto);
   }
 
   delete(id: string): boolean {
