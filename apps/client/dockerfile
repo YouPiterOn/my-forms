@@ -1,0 +1,25 @@
+FROM node:23-alpine AS build
+
+RUN npm i -g pnpm
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+
+WORKDIR /app
+
+ENV GRAPHQL_SCHEMA_PATH=./graphql-schemas/*.graphql
+
+ARG VITE_API_BASE
+ENV VITE_API_BASE=$VITE_API_BASE
+
+COPY apps/client/package.json ./
+
+RUN pnpm install
+
+COPY packages/graphql-schemas/ ./graphql-schemas
+COPY apps/client/ .
+
+RUN pnpm run generate && pnpm run build
+
+FROM nginx:alpine AS client
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 80

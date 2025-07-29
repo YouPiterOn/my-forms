@@ -9,7 +9,9 @@ export function HomePage() {
   const [page, setPage] = useState(0)
   const pageSize = 10
 
-  const { data, error, isLoading } = useGetFormsPageQuery({ pagination: { page, pageSize } })
+  const { data, error, isLoading } = useGetFormsPageQuery({ pagination: { page, pageSize } }, {
+    refetchOnMountOrArgChange: true,
+  });
   const forms = data?.formsPage.data ?? []
 
   return (

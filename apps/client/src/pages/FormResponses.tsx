@@ -23,7 +23,9 @@ export function FormResponses() {
     filters: {
       formId: id,
     },
-  })
+  }, {
+    refetchOnMountOrArgChange: true,
+  });
 
   const form = formQuery.data?.form
   const responsesPage = responsesQuery.data?.responsesPage

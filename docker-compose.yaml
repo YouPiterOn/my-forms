@@ -1,0 +1,38 @@
+services:
+  proxy:
+    image: nginx:alpine
+    container_name: proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/proxy.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - client
+      - server
+    networks:
+      - app_network
+    restart: unless-stopped
+
+  client:
+    build:
+      context: .
+      dockerfile: apps/client/dockerfile
+      target: client
+      args:
+        VITE_API_BASE: /api
+    networks:
+      - app_network
+    restart: unless-stopped
+
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/dockerfile
+      target: server
+    networks:
+      - app_network
+    restart: unless-stopped
+
+networks:
+  app_network:
+    driver: bridge

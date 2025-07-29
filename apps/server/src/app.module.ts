@@ -11,7 +11,7 @@ import { ResponseModule } from './response/response.module';
       driver: ApolloDriver,
       graphiql: true,
       validationRules: [depthLimit(5)],
-      typePaths: ['../../packages/graphql-schemas/*.graphql']
+      typePaths: [process.env.GRAPHQL_SCHEMA_PATH || '../../packages/graphql-schemas/*.graphql']
     }),
     FormModule,
     ResponseModule
