@@ -1,6 +1,6 @@
 # my-forms
 
-### dev run
+### Run local development
 
 #### Prerequisites
 
@@ -16,12 +16,20 @@ pnpm run generate
 
 # Start the development environment
 pnpm run dev
+
+# Access http://localhost:5173/
 ```
 
 ---
 
-#### run with Docker
+### Run with Docker
+
+#### Prerequisites
+
+- Docker and Docker compose
 
 ```bash
 docker compose up
+
+# Access http://localhost/
 ```
